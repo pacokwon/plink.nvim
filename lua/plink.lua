@@ -94,5 +94,6 @@ local function copy(mode)
 end
 
 return {
-    copy = copy,
+    ncopy = function () copy('n') end,
+    vcopy = function () copy('v') end,
 }
