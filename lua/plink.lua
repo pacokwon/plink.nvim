@@ -71,7 +71,7 @@ local function copy(mode)
 		return
 	end
 
-	local commit = fn.systemlist(string.format("git rev-parse HEAD", remote_url))[1]
+	local commit = fn.systemlist(string.format("git rev-parse %s/HEAD", remote_url))[1]
 	local git = parse_url(remote_url)
 
 	local start_line, end_line
