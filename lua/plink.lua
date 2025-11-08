@@ -52,6 +52,9 @@ local function parse_url(remote_url)
 	local remote_url_len = string.len(remote_url)
 	local prefix_len = string.len(prefix)
 	local suffix_len = string.len(".git") -- ".git" must be excluded from url
+	if string.sub(remote_url, -suffix_len) ~= ".git" then
+		suffix_len = 0
+	end
 
 	local repository = string.sub(remote_url, prefix_len + 1, remote_url_len - suffix_len)
 
@@ -71,7 +74,7 @@ local function copy(mode)
 		return
 	end
 
-	local commit = fn.systemlist(string.format("git rev-parse %s/HEAD", remote_url))[1]
+	local commit = fn.systemlist("git rev-parse origin/HEAD", remote_url)[1]
 	local git = parse_url(remote_url)
 
 	local start_line, end_line
