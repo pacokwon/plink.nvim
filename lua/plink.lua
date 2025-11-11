@@ -74,7 +74,12 @@ local function copy(mode)
 		return
 	end
 
-	local commit = fn.systemlist("git rev-parse origin/HEAD", remote_url)[1]
+	local current_branch = fn.systemlist("git branch --show-current")[1]
+	if vim.v.shell_error > 0 or current_branch == "" then
+		return
+	end
+
+	local commit = fn.systemlist("git rev-parse origin/" .. current_branch, remote_url)[1]
 	local git = parse_url(remote_url)
 
 	local start_line, end_line
